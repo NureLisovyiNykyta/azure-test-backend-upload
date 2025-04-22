@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Настройка подключения к базе данных из переменной окружения
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://safehomeadmin:nure_2025_sfhm_adm@nure-safe-home-db.postgres.database.azure.com:5432/postgres?sslmode=require'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_CONNECTION')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
