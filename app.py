@@ -31,5 +31,20 @@ def check_db():
     except Exception as e:
         return f"Database connection failed: {str(e)}", 500
 
+@app.route('/run-script')
+def run_script():
+    from sqlalchemy import text
+
+    try:
+        with open("init_db.sql", "r", encoding="utf-8") as f:
+            sql_script = f.read()
+
+        with db.engine.connect() as connection:
+            connection.execute(text(sql_script))
+        return "Database initialized via endpoint", 200
+    except Exception as e:
+        return f"Failed to run SQL script: {str(e)}", 500
+
+
 if __name__ == '__main__':
     app.run(debug=True)
